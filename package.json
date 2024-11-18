@@ -1,0 +1,30 @@
+{
+    "name": "node-dynamodb-utils",
+    "version": "1.0.1",
+    "description": "Utility functions for DynamoDB operations using AWS SDK v3",
+    "main": "dist/index.js",
+    "scripts": {
+        "build": "tsc",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "files": [
+        "dist/**/*"
+    ],
+    "dependencies": {
+        "@aws-sdk/client-dynamodb": "^3.35.0",
+        "@aws-sdk/lib-dynamodb": "^3.35.0",
+        "zod": "^3.11.6"
+    },
+    "devDependencies": {
+        "@types/node": "^22.9.0",
+        "typescript": "^4.5.4"
+    },
+    "keywords": [
+        "dynamodb",
+        "aws-sdk",
+        "typescript",
+        "utilities"
+    ],
+    "author": "Akash Updhyay",
+    "license": "MIT"
+}
