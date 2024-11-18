@@ -1,6 +1,6 @@
 {
     "name": "node-dynamodb-utils",
-    "version": "1.0.1",
+    "version": "1.0.3",
     "description": "Utility functions for DynamoDB operations using AWS SDK v3",
     "main": "dist/index.js",
     "scripts": {

@@ -2,6 +2,7 @@
 export { getItem } from "./operations/getItem";
 export { getItemWithCache } from "./operations/getItemWithCache";
 export { batchGet } from "./operations/batchGet";
+export { putItem } from "./operations/putItem";
 export { updateItem } from "./operations/updateItem";
 export { batchUpdate } from "./operations/batchUpdate";
 export { deleteItem } from "./operations/deleteItem";

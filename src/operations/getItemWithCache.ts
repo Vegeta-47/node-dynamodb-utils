@@ -1,18 +1,12 @@
 import fs from "fs/promises";
 import path from "path";
-import { GetCommand } from "@aws-sdk/lib-dynamodb";
+import { GetCommand, GetCommandInput } from "@aws-sdk/lib-dynamodb";
 import { client } from "../utils/dynamoClient";
-import {
-  validateTableName,
-  validateKey,
-  validateProjection,
-  Key,
-  Projection,
-} from "../utils/validations";
+import { validateTableName, validateKey } from "../utils/validations";
 
 const CACHE_DIR = "/tmp/dynamodb-cache";
 
-const ensureCacheDir = async () => {
+const ensureCacheDir = async (): Promise<void> => {
   try {
     await fs.mkdir(CACHE_DIR, { recursive: true });
   } catch {
@@ -34,7 +28,7 @@ const getCache = async (cacheKey: string): Promise<any | null> => {
   return null;
 };
 
-const setCache = async (cacheKey: string, data: any, ttl: number) => {
+const setCache = async (cacheKey: string, data: any, ttl: number): Promise<void> => {
   const cachePath = path.join(CACHE_DIR, cacheKey);
   const cacheContent = {
     data,
@@ -45,13 +39,12 @@ const setCache = async (cacheKey: string, data: any, ttl: number) => {
 
 export const getItemWithCache = async (
   tableName: string,
-  key: Key,
-  projection?: Projection,
+  key: Record<string, any>,
+  projection: string[] = [],
   ttl: number = 60
-): Promise<any> => {
+): Promise<any | null> => {
   validateTableName(tableName);
   validateKey(key);
-  validateProjection(projection);
 
   await ensureCacheDir();
 
@@ -62,10 +55,18 @@ export const getItemWithCache = async (
   const cachedData = await getCache(cacheKey);
   if (cachedData) return cachedData;
 
-  const params = {
+  // Use ExpressionAttributeNames for reserved keywords
+  const expressionAttributeNames: Record<string, string> = {};
+  projection.forEach((attr) => {
+    expressionAttributeNames[`#${attr}`] = attr;
+  });
+
+  const params: GetCommandInput = {
     TableName: tableName,
     Key: key,
-    ProjectionExpression: projection?.join(", "),
+    ProjectionExpression: projection.map((attr) => `#${attr}`).join(", "),
+    ExpressionAttributeNames:
+      Object.keys(expressionAttributeNames).length > 0 ? expressionAttributeNames : undefined,
   };
 
   const command = new GetCommand(params);
