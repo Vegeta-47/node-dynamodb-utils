@@ -1,6 +1,6 @@
 {
     "name": "node-dynamodb-utils",
-    "version": "1.0.3",
+    "version": "1.0.7",
     "description": "Utility functions for DynamoDB operations using AWS SDK v3",
     "main": "dist/index.js",
     "scripts": {
@@ -26,5 +26,13 @@
         "utilities"
     ],
     "author": "Akash Updhyay",
-    "license": "MIT"
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Vegeta-47/node-dynamodb-utils.git"
+    },
+    "bugs": {
+        "url": "https://github.com/Vegeta-47/node-dynamodb-utils/issues"
+    },
+    "homepage": "https://github.com/Vegeta-47/node-dynamodb-utils#readme"
 }
