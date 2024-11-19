@@ -11,6 +11,9 @@ export { scanTable } from "./operations/scanTable";
 export { queryTable } from "./operations/queryTable";
 export { transactWrite } from "./operations/transactWrite";
 export { transactGet } from "./operations/transactGet";
+export { batchInsert } from "./operations/batchInsert";
+export * from "./operations/batchInsert";
+
 export { listTables, describeTable, createTable, deleteTable } from "./operations/tableManagement";
 
 // Exporting utilities

@@ -31,3 +31,15 @@ export const buildFilterExpression = (filter: Record<string, any>) => {
   );
   return { expression, attributeNames, attributeValues };
 };
+
+export const validateItems = (items: Record<string, any>[]) => {
+  if (!Array.isArray(items) || items.length === 0) {
+    throw new Error("Items must be a non-empty array.");
+  }
+
+  items.forEach((item, index) => {
+    if (typeof item !== "object" || !item) {
+      throw new Error(`Item at index ${index} is not a valid object.`);
+    }
+  });
+};

@@ -4,30 +4,14 @@ A lightweight, TypeScript-based utility package for simplifying DynamoDB operati
 
 ---
 
-## **Features**
-- **Basic CRUD Operations**:
-  - `getItem`
-  - `batchGet`
-  - `updateItem`
-  - `batchUpdate`
-  - `deleteItem`
-  - `batchDelete`
-  - `insertItem`
-  - `batchInsert`
-- **Advanced Operations**:
-  - `scanTable`
-  - `queryTable`
-  - `transactWrite`
-  - `transactGet`
-- **Table Management**:
-  - `listTables`
-  - `describeTable`
-  - `createTable`
-  - `deleteTable`
-- **Caching**:
-  - `getItemWithCache` for local ephemeral storage with TTL support.
-- **Query Builder**:
-  - Build dynamic and reusable query parameters for DynamoDB.
+## Features
+
+- **CRUD Operations:** Simplified functions for `getItem`, `insertItem`, `updateItem`, and more.
+- **Table Management:** Easily manage tables with `listTables`, `createTable`, `describeTable`, and `deleteTable`.
+- **Caching:** Built-in ephemeral caching with TTL support to optimize performance.
+- **Advanced Querying:** Query and scan operations with reusable query builders.
+- **Input Validation:** Integrated with [Zod](https://github.com/colinhacks/zod) for strong input validation.
+- **TypeScript Support:** Fully typed for better developer experience and safety.
 
 ---
 
@@ -44,6 +28,7 @@ npm install dynamoDBUtils
 ## **Usage**
 
 ### **Setup**
+
 Before using the package, ensure you have AWS credentials configured in your environment or `~/.aws/credentials`.
 
 ```typescript
@@ -55,6 +40,7 @@ import { getItem, updateItem, scanTable } from "dynamoDBUtils";
 ### **Basic Examples**
 
 #### **Get an Item**
+
 ```typescript
 import { getItem } from "dynamoDBUtils";
 
@@ -63,22 +49,34 @@ console.log(result);
 ```
 
 #### **Get an Item with Cache**
+
 ```typescript
 import { getItemWithCache } from "dynamoDBUtils";
 
-const result = await getItemWithCache("UsersTable", { userId: "123" }, ["name", "email"], 10); // Cache for 10 minutes
+const result = await getItemWithCache(
+  "UsersTable",
+  { userId: "123" },
+  ["name", "email"],
+  10
+); // Cache for 10 minutes
 console.log(result);
 ```
 
 #### **Update an Item**
+
 ```typescript
 import { updateItem } from "dynamoDBUtils";
 
-const result = await updateItem("UsersTable", { userId: "123" }, { name: "John Doe" });
+const result = await updateItem(
+  "UsersTable",
+  { userId: "123" },
+  { name: "John Doe" }
+);
 console.log(result);
 ```
 
 #### **Scan a Table**
+
 ```typescript
 import { scanTable } from "dynamoDBUtils";
 
@@ -87,10 +85,14 @@ console.log(result);
 ```
 
 #### **Batch Get Items**
+
 ```typescript
 import { batchGet } from "dynamoDBUtils";
 
-const result = await batchGet("UsersTable", [{ userId: "123" }, { userId: "456" }]);
+const result = await batchGet("UsersTable", [
+  { userId: "123" },
+  { userId: "456" },
+]);
 console.log(result);
 ```
 
@@ -99,6 +101,7 @@ console.log(result);
 ### **Advanced Operations**
 
 #### **Transactional Write**
+
 ```typescript
 import { transactWrite } from "dynamoDBUtils";
 
@@ -125,6 +128,7 @@ console.log(result);
 ```
 
 #### **Query Table**
+
 ```typescript
 import { queryTable } from "dynamoDBUtils";
 
@@ -141,6 +145,7 @@ console.log(result);
 ### **Table Management**
 
 #### **List Tables**
+
 ```typescript
 import { listTables } from "dynamoDBUtils";
 
@@ -149,17 +154,14 @@ console.log(tables);
 ```
 
 #### **Create a Table**
+
 ```typescript
 import { createTable } from "dynamoDBUtils";
 
 const result = await createTable({
   TableName: "NewTable",
-  KeySchema: [
-    { AttributeName: "id", KeyType: "HASH" },
-  ],
-  AttributeDefinitions: [
-    { AttributeName: "id", AttributeType: "S" },
-  ],
+  KeySchema: [{ AttributeName: "id", KeyType: "HASH" }],
+  AttributeDefinitions: [{ AttributeName: "id", AttributeType: "S" }],
   ProvisionedThroughput: {
     ReadCapacityUnits: 5,
     WriteCapacityUnits: 5,
@@ -198,19 +200,23 @@ This package uses **Zod** to validate inputs. Incorrect inputs will throw valida
 ## **Configuration**
 
 ### **Cache Directory**
+
 For Lambda, cache is stored in `/tmp`. For other environments, ensure the process has write access to a directory for caching.
 
 ---
 
 ## **Contributing**
+
 Feel free to submit issues and pull requests on GitHub to improve this package.
 
 ---
 
 ## **License**
+
 This project is licensed under the MIT License.
 
 ---
 
 ## **Support**
+
 If you encounter any issues, feel free to open a GitHub issue or reach out to the maintainers.
